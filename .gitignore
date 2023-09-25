@@ -36,7 +36,3 @@ build/
 
 ### Mac OS ###
 .DS_Store
-
-/src/main/java/org/library/example
-database.properties
-initDB.sql

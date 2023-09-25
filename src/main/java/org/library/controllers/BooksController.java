@@ -28,8 +28,15 @@ public class BooksController {
 
     @GetMapping()
     public String index(Model model) {
+//        должен уметь принимать в адресной строке два ключа: page и books_per_page
+//        должен уметь принимать в адресной строке ключ sort_by_year
         model.addAttribute("books", bookDAO.index());
         return "books/index";
+    }
+
+    @GetMapping("/search")
+    public String search() {
+        return null;
     }
 
     @GetMapping("/{id}")

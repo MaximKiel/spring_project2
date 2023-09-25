@@ -1,6 +1,7 @@
 package org.library.model;
 
 import javax.validation.constraints.*;
+import java.util.Date;
 
 public class Book {
 
@@ -16,6 +17,8 @@ public class Book {
 
     @Max(value = 2023, message = "Publish year should be less than 2023")
     private int publishYear;
+
+    private Date issuanceTime;
 
     public Book() {
     }
@@ -56,5 +59,13 @@ public class Book {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Date getIssuanceTime() {
+        return issuanceTime;
+    }
+
+    public void setIssuanceTime(Date issuanceTime) {
+        this.issuanceTime = issuanceTime;
     }
 }
