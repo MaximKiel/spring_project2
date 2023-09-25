@@ -1,4 +1,4 @@
-package org.library.service;
+package org.library.services;
 
 public class PeopleService {
 }

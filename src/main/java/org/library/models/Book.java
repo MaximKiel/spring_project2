@@ -1,4 +1,4 @@
-package org.library.model;
+package org.library.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;

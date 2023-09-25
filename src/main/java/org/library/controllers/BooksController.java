@@ -2,8 +2,8 @@ package org.library.controllers;
 
 import org.library.dao.BookDAO;
 import org.library.dao.PersonDAO;
-import org.library.model.Book;
-import org.library.model.Person;
+import org.library.models.Book;
+import org.library.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

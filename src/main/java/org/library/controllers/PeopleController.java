@@ -1,7 +1,7 @@
 package org.library.controllers;
 
 import org.library.dao.PersonDAO;
-import org.library.model.Person;
+import org.library.models.Person;
 import org.library.util.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

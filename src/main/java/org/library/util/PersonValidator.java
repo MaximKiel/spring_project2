@@ -1,7 +1,7 @@
 package org.library.util;
 
 import org.library.dao.PersonDAO;
-import org.library.model.Person;
+import org.library.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
