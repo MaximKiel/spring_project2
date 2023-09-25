@@ -1,6 +1,11 @@
 package org.library.repositories;
 
-public interface BooksRepository {
+import org.library.models.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface BooksRepository extends JpaRepository<Book, Integer> {
 
 //    Добавить сортировку книг по году. Метод контроллера должен уметь выдавать книги в отсортированном порядке.
 
