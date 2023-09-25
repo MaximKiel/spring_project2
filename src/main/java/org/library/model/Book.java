@@ -1,24 +1,38 @@
 package org.library.model;
 
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "book")
 public class Book {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotEmpty(message = "Title should not be empty")
     @Size(min = 2, max = 100, message = "Title should be between 2 and 100 characters")
+    @Column(name = "title")
     private String title;
 
     @NotEmpty(message = "AuthorName should not be empty")
     @Size(min = 2, max = 100, message = "AuthorName should be between 2 and 100 characters")
+    @Column(name = "author_name")
     private String authorName;
 
     @Max(value = 2023, message = "Publish year should be less than 2023")
+    @Column(name = "publish_year")
     private int publishYear;
 
+    @Column(name = "issuance_time")
     private Date issuanceTime;
+
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private Person owner;
 
     public Book() {
     }
@@ -67,5 +81,13 @@ public class Book {
 
     public void setIssuanceTime(Date issuanceTime) {
         this.issuanceTime = issuanceTime;
+    }
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
     }
 }

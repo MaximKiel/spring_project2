@@ -1,4 +1,4 @@
-package org.library.repository;
+package org.library.repositories;
 
 public interface PeopleRepository {
 }
