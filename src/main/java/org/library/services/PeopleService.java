@@ -1,11 +1,14 @@
 package org.library.services;
 
+import org.hibernate.Hibernate;
+import org.library.models.Book;
 import org.library.models.Person;
 import org.library.repositories.PeopleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +34,16 @@ public class PeopleService {
 
     public Optional<Person> findByName(String name) {
         return Optional.ofNullable(peopleRepository.findByName(name));
+    }
+
+    public List<Book> getBooksByPersonId(int id) {
+        Optional<Person> person = peopleRepository.findById(id);
+        if (person.isPresent()) {
+            Hibernate.initialize(person.get().getBooks());
+            return person.get().getBooks();
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     @Transactional
