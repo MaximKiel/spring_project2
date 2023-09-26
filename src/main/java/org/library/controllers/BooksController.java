@@ -27,10 +27,11 @@ public class BooksController {
     }
 
     @GetMapping()
-    public String index(Model model) {
-//        должен уметь принимать в адресной строке два ключа: page и books_per_page
-//        должен уметь принимать в адресной строке ключ sort_by_year
-        model.addAttribute("books", booksService.findAll());
+    public String index(Model model,
+                        @RequestParam(value = "page",required = false) Integer page,
+                        @RequestParam(value = "books_per_page", required = false) Integer booksPerPage,
+                        @RequestParam(value = "sort_by_year", required = false) Boolean sortByYear) {
+        model.addAttribute("books", booksService.findAll(page, booksPerPage, sortByYear));
         return "books/index";
     }
 

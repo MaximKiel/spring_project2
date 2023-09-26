@@ -4,6 +4,8 @@ import org.library.models.Book;
 import org.library.models.Person;
 import org.library.repositories.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,10 +16,6 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class BooksService {
 
-//    Книг может быть много и они могут не помещаться на одной странице в браузере.
-//    Чтобы решить эту проблему, метод контроллера должен уметь выдавать не только все книги разом,
-//    но и разбивать выдачу на страницы.
-
     private final BooksRepository booksRepository;
 
     @Autowired
@@ -25,7 +23,16 @@ public class BooksService {
         this.booksRepository = booksRepository;
     }
 
-    public List<Book> findAll() {
+    public List<Book> findAll(Integer page, Integer booksPerPage, Boolean sortByYear) {
+        if (sortByYear != null && sortByYear && page != null && booksPerPage != null) {
+            return booksRepository.findAll(PageRequest.of(page, booksPerPage, Sort.by("publishYear"))).getContent();
+        }
+        if (sortByYear != null && sortByYear && page == null && booksPerPage == null) {
+            return booksRepository.findAll(Sort.by("publishYear"));
+        }
+        if (page != null && booksPerPage != null) {
+            return booksRepository.findAll(PageRequest.of(page, booksPerPage)).getContent();
+        }
         return booksRepository.findAll();
     }
 
