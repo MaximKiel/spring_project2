@@ -41,6 +41,13 @@ public class BooksService {
         return foundBook.orElse(null);
     }
 
+    public Book findByTitleStartingWith(String search) {
+        if (search != null) {
+            return findByTitleStartingWith(search);
+        }
+        return null;
+    }
+
     @Transactional
     public void save(Book book) {
         booksRepository.save(book);

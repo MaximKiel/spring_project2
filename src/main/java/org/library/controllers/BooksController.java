@@ -35,11 +35,6 @@ public class BooksController {
         return "books/index";
     }
 
-    @GetMapping("/search")
-    public String search() {
-        return null;
-    }
-
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
         Book book = booksService.findOne(id);
@@ -90,6 +85,16 @@ public class BooksController {
     public String delete(@PathVariable("id") int id) {
         booksService.delete(id);
         return "redirect:/books";
+    }
+
+    @GetMapping("/search")
+    public String search() {
+        return "books/search";
+    }
+
+    @PostMapping("/search")
+    public String searchResult() {
+        return null;
     }
 
     @PatchMapping("/{id}/release")
