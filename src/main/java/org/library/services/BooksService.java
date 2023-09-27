@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +51,8 @@ public class BooksService {
 
     @Transactional
     public void save(Book book) {
+        book.setIssuanceTime(new Date());
+        book.setOverdue(false);
         booksRepository.save(book);
     }
 

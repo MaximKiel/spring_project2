@@ -2,6 +2,8 @@ package org.library.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Date;
 
 @Entity
@@ -27,12 +29,15 @@ public class Book {
     @Column(name = "publish_year")
     private int publishYear;
 
-    @Column(name = "issuance_time")
-    private Date issuanceTime;
-
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person owner;
+
+    @Column(name = "issuance_time")
+    private Date issuanceTime;
+
+    @Transient
+    private boolean isOverdue;
 
     public Book() {
     }
@@ -89,5 +94,17 @@ public class Book {
 
     public void setOwner(Person owner) {
         this.owner = owner;
+    }
+
+    public boolean isOverdue() {
+        Date date = Date.from(Instant.now().minus(Duration.ofDays(10)));
+        if (this.getIssuanceTime() != null && this.getIssuanceTime().before(date)) {
+            this.setOverdue(true);
+        }
+        return isOverdue;
+    }
+
+    public void setOverdue(boolean overdue) {
+        isOverdue = overdue;
     }
 }
