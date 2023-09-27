@@ -2,8 +2,6 @@ package org.library.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.Date;
 
 @Entity
@@ -34,10 +32,11 @@ public class Book {
     private Person owner;
 
     @Column(name = "issuance_time")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date issuanceTime;
 
     @Transient
-    private boolean isOverdue;
+    private boolean overdue;
 
     public Book() {
     }
@@ -97,14 +96,10 @@ public class Book {
     }
 
     public boolean isOverdue() {
-        Date date = Date.from(Instant.now().minus(Duration.ofDays(10)));
-        if (this.getIssuanceTime() != null && this.getIssuanceTime().before(date)) {
-            this.setOverdue(true);
-        }
-        return isOverdue;
+        return overdue;
     }
 
     public void setOverdue(boolean overdue) {
-        isOverdue = overdue;
+        this.overdue = overdue;
     }
 }

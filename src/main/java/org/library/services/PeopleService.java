@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +43,11 @@ public class PeopleService {
         Optional<Person> person = peopleRepository.findById(id);
         if (person.isPresent()) {
             Hibernate.initialize(person.get().getBooks());
+
+            Date date = Date.from(Instant.now().minus(Duration.ofDays(10)));
+            person.get().getBooks().forEach(book ->
+                    book.setOverdue(book.getIssuanceTime() != null && book.getIssuanceTime().before(date)));
+
             return person.get().getBooks();
         } else {
             return Collections.emptyList();

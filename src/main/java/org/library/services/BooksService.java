@@ -58,7 +58,9 @@ public class BooksService {
 
     @Transactional
     public void update(int id, Book updatedBook) {
+        Book bookToUpdate = booksRepository.findById(id).get();
         updatedBook.setId(id);
+        updatedBook.setOwner(bookToUpdate.getOwner());
         booksRepository.save(updatedBook);
     }
 
@@ -69,19 +71,17 @@ public class BooksService {
 
     @Transactional
     public void release(int id) {
-        Optional<Book> foundBook = booksRepository.findById(id);
-        if (foundBook.isPresent()) {
-            Book book = foundBook.get();
+        booksRepository.findById(id).ifPresent(book -> {
             book.setOwner(null);
-        }
+            book.setIssuanceTime(null);
+        });
     }
 
     @Transactional
     public void assign(int id, Person person) {
-        Optional<Book> foundBook = booksRepository.findById(id);
-        if (foundBook.isPresent()) {
-            Book book = foundBook.get();
+        booksRepository.findById(id).ifPresent(book -> {
             book.setOwner(person);
-        }
+            book.setIssuanceTime(new Date());
+        });
     }
 }
