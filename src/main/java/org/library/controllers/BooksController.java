@@ -88,13 +88,9 @@ public class BooksController {
     }
 
     @GetMapping("/search")
-    public String search() {
+    public String search(Model model, @RequestParam(value = "request",required = false) String request) {
+        model.addAttribute("result", booksService.findByTitleStartingWith(request));
         return "books/search";
-    }
-
-    @PostMapping("/search")
-    public String searchResult() {
-        return null;
     }
 
     @PatchMapping("/{id}/release")
