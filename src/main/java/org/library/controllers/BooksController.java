@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/books")
@@ -37,13 +36,10 @@ public class BooksController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
-        Book book = booksService.findOne(id);
-        model.addAttribute("book", book);
-
-        Optional<Person> bookOwner = Optional.ofNullable(book.getOwner());
-
-        if (bookOwner.isPresent()) {
-            model.addAttribute("owner", bookOwner.get());
+        model.addAttribute("book", booksService.findOne(id));
+        Person bookOwner = booksService.getBookOwner(id);
+        if (bookOwner != null) {
+            model.addAttribute("owner", bookOwner);
         } else {
             model.addAttribute("people", peopleService.findAll());
         }
@@ -88,8 +84,13 @@ public class BooksController {
     }
 
     @GetMapping("/search")
-    public String search(Model model, @RequestParam(value = "request",required = false) String request) {
-        model.addAttribute("result", booksService.findByTitleStartingWith(request));
+    public String searchPage() {
+        return "books/search";
+    }
+
+    @PostMapping("/search")
+    public String makeSearch(Model model, @RequestParam("query") String query) {
+        model.addAttribute("books", booksService.findByTitle(query));
         return "books/search";
     }
 

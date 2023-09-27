@@ -42,7 +42,7 @@ public class BooksService {
         return foundBook.orElse(null);
     }
 
-    public List<Book> findByTitleStartingWith(String search) {
+    public List<Book> findByTitle(String search) {
         if (search != null) {
             return booksRepository.findByTitleStartingWith(search);
         }
@@ -51,8 +51,6 @@ public class BooksService {
 
     @Transactional
     public void save(Book book) {
-        book.setIssuanceTime(new Date());
-        book.setOverdue(false);
         booksRepository.save(book);
     }
 
@@ -67,6 +65,10 @@ public class BooksService {
     @Transactional
     public void delete(int id) {
         booksRepository.deleteById(id);
+    }
+
+    public Person getBookOwner(int id) {
+        return booksRepository.findById(id).map(Book::getOwner).orElse(null);
     }
 
     @Transactional
